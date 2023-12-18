@@ -1,0 +1,37 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  padding: 3%;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+}
+
+.game {
+  height: 100%;
+  width: 100%;
+}
+
+.affichage-container {
+  width: 100%;
+  margin: 2% 2% 2% 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+}
+
+.aim {
+  position: absolute;
+  background-color: white;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
