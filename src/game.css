@@ -28,6 +28,15 @@ body {
   justify-content: end;
 }
 
+.col {
+  display: flex;
+  flex-direction: column;
+}
+
+.affichage {
+  text-align: end;
+}
+
 .aim {
   position: absolute;
   background-color: white;
