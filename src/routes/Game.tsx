@@ -31,6 +31,7 @@ const Game = () => {
   return (
     <>
       <div className='affichage-container'>
+        <div className="timer">Time : </div>
         <div className='affichage'>{clickCounter} / 10</div>
       </div>
       <div className="game">
