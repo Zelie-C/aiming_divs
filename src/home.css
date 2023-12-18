@@ -1,0 +1,19 @@
+.app-home-container {
+    display: flex;
+    flex-direction: rox;
+    justify-content: center;
+    align-items: center;
+}
+.home {
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    gap: 1em;
+}
+
+.input-username {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5em;
+}

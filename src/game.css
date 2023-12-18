@@ -33,6 +33,10 @@ body {
   flex-direction: column;
 }
 
+.user {
+  text-align: end;
+}
+
 .affichage {
   text-align: end;
 }

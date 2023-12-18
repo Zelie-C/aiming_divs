@@ -10,11 +10,11 @@ const router = createBrowserRouter([
     element: <Home />
   },
   {
-    path: '/game',
+    path: '/game/:username',
     element: <Game />
   },
   {
-    path: '/end',
+    path: '/end/:username',
     element: <End />
   }
 ])
