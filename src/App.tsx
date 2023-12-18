@@ -1,8 +1,8 @@
-import './app.css'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Game from './routes/Game'
 import Home from './routes/Home'
 import End from './routes/End'
+import './app.css'
 
 const router = createBrowserRouter([
   {
