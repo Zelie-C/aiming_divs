@@ -28,6 +28,7 @@ const Game = () => {
     setStartTime(Date.now())
     setInterval(() => {
       setTimelapse(Math.random())
+      console.log(timelapse);
     }, 120)
   }, [])
 
