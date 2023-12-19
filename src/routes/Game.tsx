@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import '../game.css'
 import { useNavigate, useParams } from 'react-router-dom'
-import FullscreenButton from '../components/FullscreenButton'
 
 const randomizeLeftPosition = () => {
   return Math.floor(Math.random() * 100)
@@ -22,7 +21,7 @@ const Game = () => {
   const [clickCounter, setClickCounter] = useState<number>(0)
   const [leftPosition, setLeftPosition] = useState<number>(randomizeLeftPosition())
   const [topPosition, setTopPosition] = useState<number>(randomizeTopPosition())
-  const [timelapse, setTimelapse] = useState<number>(0)
+  const [_, setTimelapse] = useState<number>(0)
   const [startTime, setStartTime] = useState<number>(0)
   const [userTimes, setUserTimes] = useState<number[]>([])
   const [latitude, setLatitude] = useState<string>("")
@@ -37,13 +36,13 @@ const Game = () => {
         setLatitude(JSON.stringify(currentLatitude))
         setLongitude(JSON.stringify(currentLongitude))
     });
-  }, [])
+  }, [navigator])
 
   useEffect(() => {
     setStartTime(Date.now())
     setInterval(() => {
       setTimelapse(Math.random())
-      console.log(timelapse);
+      
     }, 120)
   }, [])
 
@@ -85,18 +84,12 @@ const Game = () => {
         localStorage.setItem(params.username!, JSON.stringify([finalTime]))
         
       }
+      
+      navigate('/end/' + params.username)
+  
       setClickCounter(0)
-      // const redirectionInterval = setInterval(
-      //   () => {
-          navigate('/end/' + params.username)
-      // }, 2000)
-      // return () => clearInterval(redirectionInterval)
     }
   }, [navigate, clickCounter,params.username, userTimes])
-
-  const handleFullscreenClick = () => {
-
-  }
 
   return (
     <>
@@ -109,10 +102,7 @@ const Game = () => {
             <div className="country-name">{country}</div>
           </div>
         </div>
-        <div className="game">
           <div className='aim' onClick={handleDivClick} style={{top: `${topPosition}%`, left: `${leftPosition}%`}}></div>
-        </div>
-        <FullscreenButton onClick={() => handleFullscreenClick()}/>
       </div>
     </>
   )

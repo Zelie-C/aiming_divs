@@ -4,13 +4,17 @@ h1 {
 
 .end-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
 }
 
 .final-score {
+    text-align: center;
     border: 1px solid pink;
     padding: 2%;
-    width: 30%;
+    width: 40%;
 }
 
 .current-result {
@@ -28,7 +32,8 @@ button {
 }
 
 .best-scores {
+    text-align: center;
     border: 1px solid pink;
     padding: 2%;
-    width: 30%;
+    width: 40%;
 }

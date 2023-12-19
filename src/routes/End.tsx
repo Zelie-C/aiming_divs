@@ -1,34 +1,43 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import '../end.css'
-import FullscreenButton from "../components/FullscreenButton"
 
 const End = () => {
 
   const navigate = useNavigate()
   const params = useParams()
-  const [times, setTimes] = useState<number[]>([])
+  const [times, setTimes] = useState<number[] | null>([])
+  const [isBestScores, setIsBestScores] = useState<boolean>(true)
 
   useEffect(() => {
-    const times = localStorage.getItem(params.username!)!
-    const parsedTimes = JSON.parse(times)
-    const sortedTimes = parsedTimes.sort((a: number, b: number) => a - b)
-    setTimes(sortedTimes)
-  })
+    if(times){
+      const times = localStorage.getItem(params.username!)!
+      const parsedTimes = JSON.parse(times)
+      const sortedTimes = parsedTimes.sort((a: number, b: number) => a - b)
+      setTimes(sortedTimes)
+    }
+  }, [])
 
   const handleRestartClick = () => {
     localStorage.removeItem('time')
     navigate('/game/' + params.username)
   }
 
-  const handleEraseScores = () => {
+  const handleEraseScores = useCallback(() => {
     localStorage.removeItem(params.username!)
-    navigate('/end/' + params.username)
-  }
+    setIsBestScores(false)
+    if (window.Notification){
+      Notification.requestPermission()
+      .then((permission) => {
+        if(permission === "granted"){
+          new Notification("Données effacées", {
+            body: `Les temps de ${params.username} ont été effacées !`
+          })
+        }
+      })
+    }
+  }, [params.username])
 
-  const handleFullscreenClick = () => {
-
-  }
   
   return (
     <>
@@ -42,13 +51,12 @@ const End = () => {
       </div>
       <div className="best-scores">
         <h1>Meilleurs temps</h1>
-        {times ? times.map(
+        {isBestScores && times ? times.map(
           (time, index) => (
             <div className="best-time">{index + 1} - {time}</div>
           )
         ) : <div>Aucun score enregistré</div>}
       </div>
-      <FullscreenButton onClick={() => handleFullscreenClick()}/>
     </div>
     </>
   )

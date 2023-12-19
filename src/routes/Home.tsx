@@ -9,6 +9,7 @@ const Home = () => {
   const [username, setUsername] = useState<string>("")
   const [installPrompt, setInstallPrompt] = useState<any>(null)
   const [shareData, setShareDate] = useState({})
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
 
   useEffect(
     () => {
@@ -46,8 +47,17 @@ const Home = () => {
   }
 
   const handleFullscreenClick = () => {
-
+    if(!isFullscreen) {
+      document.documentElement.requestFullscreen()
+      setIsFullscreen(true)
+    } else {
+      document.exitFullscreen()
+      setIsFullscreen(false)
+    }
   }
+
+
+
 
   return (
     <>
