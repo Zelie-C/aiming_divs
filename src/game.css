@@ -31,15 +31,9 @@ body {
 .col {
   display: flex;
   flex-direction: column;
+  align-items: end;
 }
 
-.user {
-  text-align: end;
-}
-
-.affichage {
-  text-align: end;
-}
 
 .aim {
   position: absolute;
