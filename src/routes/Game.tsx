@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import '../game.css'
 import { useNavigate, useParams } from 'react-router-dom'
+import FullscreenButton from '../components/FullscreenButton'
 
 const randomizeLeftPosition = () => {
   return Math.floor(Math.random() * 100)
@@ -12,7 +13,7 @@ const randomizeTopPosition = () => {
 
 
 
-const meowing = new Audio('public/assets/miaulement.mp3')
+const meowing = new Audio('assets/miaulement.mp3')
 
 const Game = () => {
 
@@ -69,6 +70,7 @@ const Game = () => {
       meowing.pause()
       meowing.currentTime = 0
       meowing.play()
+      window.navigator.vibrate(200)
     } else {
       const finalTime = (Date.now() - startTime) / 1000
       localStorage.setItem('time', JSON.stringify(finalTime))
@@ -81,25 +83,36 @@ const Game = () => {
       } else {
         setUserTimes([finalTime])
         localStorage.setItem(params.username!, JSON.stringify([finalTime]))
+        
       }
-  
-      navigate('/end/' + params.username)
+      setClickCounter(0)
+      // const redirectionInterval = setInterval(
+      //   () => {
+          navigate('/end/' + params.username)
+      // }, 2000)
+      // return () => clearInterval(redirectionInterval)
     }
   }, [navigate, clickCounter,params.username, userTimes])
 
+  const handleFullscreenClick = () => {
+
+  }
 
   return (
     <>
-      <div className='affichage-container'>
-        <div className="col">
-          <div className="user">{params.username}</div>
-          <div className="timer">Time : {startTime ? (Date.now() - startTime) / 1000 : 0}</div>
-          <div className='affichage'>{clickCounter} / 10</div>
-          <div className="country-name">{country}</div>
+      <div className="game-container">
+        <div className='affichage-container'>
+          <div className="col">
+            <div className="user">{params.username}</div>
+            <div className="timer">Time : {startTime ? (Date.now() - startTime) / 1000 : 0}</div>
+            <div className='affichage'>{clickCounter} / 10</div>
+            <div className="country-name">{country}</div>
+          </div>
         </div>
-      </div>
-      <div className="game">
-        <div className='aim' onClick={handleDivClick} style={{top: `${topPosition}%`, left: `${leftPosition}%`}}></div>
+        <div className="game">
+          <div className='aim' onClick={handleDivClick} style={{top: `${topPosition}%`, left: `${leftPosition}%`}}></div>
+        </div>
+        <FullscreenButton onClick={() => handleFullscreenClick()}/>
       </div>
     </>
   )

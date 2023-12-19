@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import '../end.css'
+import FullscreenButton from "../components/FullscreenButton"
 
 const End = () => {
 
@@ -10,7 +11,9 @@ const End = () => {
 
   useEffect(() => {
     const times = localStorage.getItem(params.username!)!
-    setTimes(JSON.parse(times))
+    const parsedTimes = JSON.parse(times)
+    const sortedTimes = parsedTimes.sort((a: number, b: number) => a - b)
+    setTimes(sortedTimes)
   })
 
   const handleRestartClick = () => {
@@ -21,6 +24,10 @@ const End = () => {
   const handleEraseScores = () => {
     localStorage.removeItem(params.username!)
     navigate('/end/' + params.username)
+  }
+
+  const handleFullscreenClick = () => {
+
   }
   
   return (
@@ -36,11 +43,12 @@ const End = () => {
       <div className="best-scores">
         <h1>Meilleurs temps</h1>
         {times ? times.map(
-          (time) => (
-            <div className="best-time">{time}</div>
+          (time, index) => (
+            <div className="best-time">{index + 1} - {time}</div>
           )
         ) : <div>Aucun score enregistré</div>}
       </div>
+      <FullscreenButton onClick={() => handleFullscreenClick()}/>
     </div>
     </>
   )

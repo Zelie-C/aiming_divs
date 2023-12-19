@@ -1,20 +1,28 @@
 import { useNavigate } from "react-router-dom"
 import '../home.css'
 import React, { useCallback, useEffect, useState } from "react"
+import FullscreenButton from "../components/FullscreenButton"
 
 const Home = () => {
 
   const navigate = useNavigate()
   const [username, setUsername] = useState<string>("")
-  const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null)
+  const [installPrompt, setInstallPrompt] = useState<any>(null)
+  const [shareData, setShareDate] = useState({})
 
   useEffect(
     () => {
-      
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault;
         setInstallPrompt(e);
       })
+    }, [])
+
+  useEffect(
+    () => {
+      setShareDate(
+        {title: "Aiming divs",
+        url: "https://aiming-divs.vercel.app/"})
     }, [])
 
   const handleUsernameChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,16 +33,21 @@ const Home = () => {
     navigate('/game/' + username)
   }
 
-  const handleInstallButtonClick = useCallback(async() => {
+  const handleInstallButtonClick = useCallback(() => {
     if(!installPrompt) {
       return
     }
-    try {
-      await installPrompt.prompt()
-    } catch(error){
-      
-    }
+    installPrompt.prompt()
+  
   }, [])
+  
+  const handleShareButtonClick = () => {
+    navigator.share(shareData)
+  }
+
+  const handleFullscreenClick = () => {
+
+  }
 
   return (
     <>
@@ -44,9 +57,13 @@ const Home = () => {
             <label htmlFor="username">Username</label>
             <input type="text" name="username" onChange={handleUsernameChange} required/>
           </div>
-          <button onClick={handleStartButtonClick}>Start</button>
-          <button onClick={handleInstallButtonClick}>Installer</button>
+          <div className="home-btn-container">
+            <button className='home-btn' onClick={handleStartButtonClick}>Start</button>
+            <button className='home-btn' onClick={handleInstallButtonClick}>Installer</button>
+            <button className='home-btn' onClick={handleShareButtonClick}>Partager</button>
+          </div>
         </div>
+        <FullscreenButton onClick={() => handleFullscreenClick()} />
       </div>
     </>
   )
