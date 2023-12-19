@@ -10,6 +10,8 @@ const randomizeTopPosition = () => {
   return Math.floor(Math.random() * 100)
 }
 
+const meowing = new Audio('public/assets/miaulement.mp3')
+
 const Game = () => {
 
   const navigate = useNavigate();
@@ -35,6 +37,9 @@ const Game = () => {
       setClickCounter(clickCounter + 1)
       setLeftPosition(randomizeLeftPosition())
       setTopPosition(randomizeTopPosition())
+      meowing.pause()
+      meowing.currentTime = 0
+      meowing.play()
     } else {
       const finalTime = (Date.now() - startTime) / 1000
       localStorage.setItem('time', JSON.stringify(finalTime))
