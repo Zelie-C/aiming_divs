@@ -1,5 +1,10 @@
 h1 {
+    margin-bottom: 3%;
+}
+
+h2 {
     margin-bottom: 5%;
+    color: pink;
 }
 
 .end-container {

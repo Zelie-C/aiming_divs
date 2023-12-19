@@ -51,6 +51,7 @@ const End = () => {
       </div>
       <div className="best-scores">
         <h1>Meilleurs temps</h1>
+        <h2>{params.username}</h2>
         {isBestScores && times ? times.map(
           (time, index) => (
             <div className="best-time">{index + 1} - {time}</div>
