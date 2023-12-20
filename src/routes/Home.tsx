@@ -6,7 +6,7 @@ import FullscreenButton from "../components/FullscreenButton"
 const Home = () => {
 
   const navigate = useNavigate()
-  const [username, setUsername] = useState<string>("")
+  const [username, setUsername] = useState<string | null>()
   const [installPrompt, setInstallPrompt] = useState<any>(null)
   const [shareData, setShareDate] = useState({})
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false)
@@ -31,7 +31,21 @@ const Home = () => {
   }, [])
 
   const handleStartButtonClick = () => {
-    navigate('/game/' + username)
+    if(username === null || username === undefined){
+      navigate('/')
+      if (window.Notification){
+        Notification.requestPermission()
+        .then((permission) => {
+          if(permission === "granted"){
+            new Notification("Username manquant", {
+              body: `Il faut un nom d'utilisateur pour accéder au jeu !`
+            })
+          }
+        })
+      }
+    } else {
+      navigate('/game/' + username)
+    }
   }
 
   const handleInstallButtonClick = useCallback(() => {
